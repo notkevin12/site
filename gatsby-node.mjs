@@ -56,11 +56,12 @@ export const sourceNodes = async ({
   actions: { createNode },
   createContentDigest,
 }) => {
+  const baseurl =
+    "https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/";
   const apiKey = "97B4944A1DB24D2A08846846D6EEE036";
   const steamId = "76561198201033057";
-  const response = await fetch(
-    `https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key=${apiKey}&steamid=${steamId}&format=json`
-  );
+  const args = `?key=${apiKey}&steamid=${steamId}&format=json`;
+  const response = await fetch(baseurl + args);
   const responseJson = await response.json();
   const responseGames = responseJson.response.games;
   createNode({
