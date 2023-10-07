@@ -256,3 +256,30 @@ digraph graphname {
     D -> C [ style=dashed, constraint=false, xlabel=cross ];
 }
 ```
+
+The ancestor/descendant relationship is easily read from `pre` and `post` numbers. A node $u$ is the ancestor of $v$ in the traversal tree if and only if $u$ was visited first, and $v$ was visited during the process of `explore(u)`. For `pre` and `post` numbers, this means that:
+
+$$\text{pre}(u)<\text{pre}(v)<\text{post}(v)<\text{post}(u)$$
+
+With this in mind, we can restate the classification of our directed DFS edges in terms of `pre` and `post`, as shown below. All edges are given as $(u, v)$.
+
+$$
+\begin{align*}
+\text{tree \& forward} && \text{pre}(u)<\text{pre}(v)<\text{post}(v)<\text{post}(u)\\
+\text{back} && \text{pre}(v)<\text{pre}(u)<\text{post}(u)<\text{post}(v)\\
+\text{cross} && \text{pre}(v)<\text{post}(v)<\text{pre}(u)<\text{post}(u)
+\end{align*}
+$$
+
+With this description in mind, we can move on to the useful and interesting properties of depth-first search on directed graphs.
+
+**Property:** _A directed graph has a cycle if and only if its depth-first search reveals a back edge._
+
+- First we show that, if a directed graph has a cycle, then its depth-first search reveals a back edge. Let's assume we start DFS from an vertex in the cycle, and we'll call it $v_0$. For a cycle consisting of $n$ edges, the edges in the cycle would resemble the following:
+  $$
+  v_0 \to v_1, v_1 \to v_2, \ldots, v_{n - 1} \to v_0
+  $$
+  Nodes $v_1$ through $v_{n - 1}$ are included in the traversal tree, and therefore share $v_0$ as their common ancestor. As such, $(v_{n - 1}, v_0)$ is an edge from a vertex to its ancestor, which is a back edge by definition.
+- The other direction is easier. If our depth-first search starting from $u$ reveals a back edge $(v, u)$, then the path in the DFS traversal from $u$ to $v$ forms a cycle with the inclusion of $(v, u)$.
+
+In the absence of any back edges, we can refer to a directed graph as a _directed acyclic graph_, or DAG. DAGs are useful for representing causality, dependencies, or any information of the form "x comes before y". In such cases, it would be useful for create a total ordering of all vertices such that no "x comes before y" relationship is violated.
