@@ -6,7 +6,7 @@ format: default
 
 chenkuanlai [at] gmail.com / clai [at] ucsb.edu / [GitHub](https://github.com/notkevin12) / [LinkedIn](https://www.linkedin.com/in/notkevin12) / [Resume](Resume.pdf)
 
-I am a Master's Computer Science student at [UC Santa Barbara](cs.ucsb.edu).
+I am a Master's Computer Science student at [UC Santa Barbara](https://www.cs.ucsb.edu/).
 
 ![it's me! :P](me.png)
 
