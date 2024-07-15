@@ -21,10 +21,6 @@ I am a Master's Computer Science student at [UC Santa Barbara](https://www.cs.uc
 - _Webgame Programmer_  
   UCSB Department of Psychological & Brain Sciences (Jan 2021 - Feb 2021)
 
-# Recognition
-
-- [UCSB CS Distinction in the Major](https://www.cs.ucsb.edu/education/undergraduate/special-programs) advised by Professor Eric Vigoda
-
 # Teaching Assistance
 
 - CS40: Foundations of Computer Science  
@@ -39,11 +35,10 @@ I am a Master's Computer Science student at [UC Santa Barbara](https://www.cs.uc
 # Projects
 
 - _A Survey of MCMC for Ferromagnetic Spin Systems_  
-  UCSB CS Distinction in the Major Project (Sep 2022 - Jun 2023)
+  UCSB CS Distinction in the Major Project -- advised by Professor Eric Vigoda
   - [Poster](DIMAP.pdf)
   - [Source code](https://github.com/ucsb/kevinl-f22-dimap)
 - _Smart Eye Mask_  
-  (Jan 2023 - Mar 2023)
   - Arduino-based IoT device for measuring and logging biometric data.
   - [Source code](https://github.com/ucsb/CS190B-Eyemask-jeffrey_chen)
 
