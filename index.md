@@ -1,5 +1,5 @@
 ---
-format: default
+layout: default
 ---
 
 # Chenkuan (Kevin) Lai

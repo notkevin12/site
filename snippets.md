@@ -1,5 +1,5 @@
 ---
-format: default
+layout: default
 ---
 
 Testing that this works...
