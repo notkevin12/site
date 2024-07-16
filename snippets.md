@@ -5,7 +5,7 @@ katex: true
 
 # Snippets
 
-This page features snippets of code implmenting common algorithms, design patterns, and whatnot for my own reference.
+This page features snippets of code implementing common algorithms, design patterns, and whatnot for my own reference.
 
 ### Binary Search
 
