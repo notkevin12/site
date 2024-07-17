@@ -27,5 +27,6 @@ int bin_search(vector<int> A, int target)
 }
 ```
 
-- Implementing the midpoint computation with `l + (r - l) / 2` avoids integer overflow.
-- The right pointer `r` is an exclusive upper bound, so the range of elements being considered for each loop of the search is $$[A_l, A_r)$$.
+- Returns an index into $$A$$ if `target` is found, or $$-1$$ otherwise.
+- Implementing the midpoint computation with $$l+(r-l)/2$$ avoids integer overflow.
+- The right pointer `r` is an exclusive upper bound, so the range of elements being considered for each loop of the search is $$[A_l, A_{r-1}]$$.
