@@ -6,9 +6,11 @@ layout: default
 
 My personal C++ reference, guaranteed to be much worse than any comparable resource that can be found online.
 
+---
+
 ## `public`, `private`, `protected`
 
-The fields (variables) and methods (functions) of a class are collectively referenced as the _members_ of that class.
+The fields (variables) and methods (functions) of a class are collectively referred to as the _members_ of that class.
 
 Members of a class that are `public` are accessible from anywhere.
 
@@ -75,7 +77,7 @@ class PrivFoo : private Foo
 
 ---
 
-References
+## References
 
 - [learncpp.com](https://www.learncpp.com)
 

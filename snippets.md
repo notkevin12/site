@@ -7,6 +7,8 @@ katex: true
 
 This page features snippets of code implementing common algorithms, design patterns, and whatnot for my own reference.
 
+---
+
 ### Binary Search
 
 ```cpp

@@ -12,7 +12,7 @@ I am a Master's Computer Science student at [UC Santa Barbara](https://www.cs.uc
 
 ---
 
-# Experience
+## Experience
 
 - _Software Engineering Intern_  
   Arista Networks (Jun 2023 - Sep 2023)
@@ -21,7 +21,7 @@ I am a Master's Computer Science student at [UC Santa Barbara](https://www.cs.uc
 - _Webgame Programmer_  
   UCSB Department of Psychological & Brain Sciences (Jan 2021 - Feb 2021)
 
-# Teaching Assistance
+## Teaching Assistance
 
 - CS40: Foundations of Computer Science  
   (Spring 2023)
@@ -32,7 +32,7 @@ I am a Master's Computer Science student at [UC Santa Barbara](https://www.cs.uc
 - CS138: Formal Languages and Automata  
   (Spring 2024)
 
-# Projects
+## Projects
 
 - _A Survey of MCMC for Ferromagnetic Spin Systems_  
   UCSB CS Distinction in the Major Project -- advised by Professor Eric Vigoda
@@ -44,4 +44,8 @@ I am a Master's Computer Science student at [UC Santa Barbara](https://www.cs.uc
 
 ---
 
-[Source files for this site](https://github.com/notkevin12/site)
+## Other
+
+- [C++ reference](./cpp)
+- [Snippets](./snippets)
+- [Source files for this site](https://github.com/notkevin12/site)
