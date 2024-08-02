@@ -67,7 +67,7 @@ __Peer-to-Peer (P2P) Architecture__: direct communication between clients
   - Tit-for-tat trading: peers prioritze sending data to the neighbors that send data at higher rates
   - An additional neighbor is randomly chosen at regular intervals to receive data (so new peers may receive chunks to trade)
 
-__Sockets__ deliver messages between appliation __processes__ and the transport layer
+__Sockets__ deliver messages between application __processes__ and the transport layer
 
 __IP addresses__ identify hosts, __port numbers__ identify processes on a host -- need to know both to determine where messages are sent/received
 
@@ -90,7 +90,7 @@ HTTP requests may direct to a __web cache (proxy server)__ instead of origin ser
 - Content Distribution Networks (CDN) install many caches to geographically localize traffic and reduce service latency
 - Cluster selection strategies:
   - Geographically closest: CDN directs DNS request to the cluster closest to the requesting host
-  - Better: perform period measurements of network traffic conditions to determine best cluster
+  - Better: perform periodic measurements of network traffic conditions to determine best cluster
 
 __Domain Name System (DNS)__ is a distributed database mapping hostnames to IP addresses
 
@@ -108,6 +108,7 @@ __Domain Name System (DNS)__ is a distributed database mapping hostnames to IP a
 - Demultiplexing: delivering ingress segments to the correct socket/process
 - Multiplexing: gathering data from different sockets and serializing egress segments
 - Source and destination port fields are 16 bits (range [0, 65535], but ports [0, 1023] are reserved)
+- UDP sockets are a 2-tuple of `(dest IP, dest port)`, whereas TCP sockets are a 4-tuple of `(source IP, source port, dest IP, dest port)`
 
 ## Network Addressing
 
