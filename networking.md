@@ -105,10 +105,30 @@ __Domain Name System (DNS)__ is a distributed database mapping hostnames to IP a
 
 ## Transport Protocols
 
+The Transport Layer enables process-to-process communication, and port numbers differentiate between different processes' sockets
+
 - Demultiplexing: delivering ingress segments to the correct socket/process
 - Multiplexing: gathering data from different sockets and serializing egress segments
 - Source and destination port fields are 16 bits (range [0, 65535], but ports [0, 1023] are reserved)
 - UDP sockets are a 2-tuple of `(dest IP, dest port)`, whereas TCP sockets are a 4-tuple of `(source IP, source port, dest IP, dest port)`
+
+__UDP__ only adds source and destination port fields and checksum to IP-layer datagrams
+
+`| Source Port | Dest Port | Length | Checksum | Payload |`
+
+__Reliable data transfer__ deals with packet corruption, loss, and reordering which occurs at lower layers
+
+- `ACK` and `NAK` packets are sent from the receiver to signify whether the packet it received is corrupted or not
+- Checksum: take the 1's complement (invert the bits) of the sum of all 16-bit words in the segment
+- Why is `ACK`/`NAK` corruption problematic? The sender might not be able to differentiate between a corrupted `ACK` or `NAK` response
+  - _Solution 1_: sender retransmits the current packet if it receives a corrupted response
+  - However, now receiver cannot distinguish between a retransmitted packet and a packet containing new data
+  - _Solution 2_: packets are numbered, and the sequence number is included in the header
+- How to handle lost/delayed packets? Sender can simply time out and retransmit after waiting too long for an `ACK`
+- Pipelining: sender sends many packets at a time without waiting for `ACK`s
+  - Go-Back-N (GBN): only N unacknowledged packets are allowed in the pipeline at any given time (sliding window)
+
+__TCP__
 
 ## Network Addressing
 
