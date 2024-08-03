@@ -113,7 +113,7 @@ The Transport Layer enables process-to-process communication, and port numbers d
 - Source and destination port fields are 16 bits (range [0, 65535], but ports [0, 1023] are reserved)
 - UDP sockets are a 2-tuple of `(dest IP, dest port)`, whereas TCP sockets are a 4-tuple of `(source IP, source port, dest IP, dest port)`
 
-__UDP__ only adds source and destination port fields and checksum to IP-layer datagrams
+__UDP (User Datagram Protocol)__ only adds source and destination port fields and checksum to IP-layer datagrams
 
 `| Source Port | Dest Port | Length | Checksum | Payload |`
 
@@ -143,7 +143,25 @@ __Selective-Repeat (SR)__ attempts to optimize GBN by retransmitting individual 
 - Receiver will acknowledge uncorrupted packets that arrive out-of-sequence, buffering up to $$N-1$$ such packets
 - Receiver still has to acknowledge uncorrupted packets in $$[\texttt{rcv\_base} - N, \texttt{rcv\_base} - 1]$$, since sender and receiver windows may differ by at most $$N$$
 
-__TCP__
+__TCP (Transmission Control Protocol)__ shares many ideas with GBN, but with a few optimizations from SR
+
+- Maximum segment size (MSS) refers to maximum data payload in a segment (not including headers)
+  - Usually determined by maximum transmission unit (MTU), or the largest frame that can be transmitted over a link
+- Segment sequence number is the bytestream number of the first byte in the segment payload
+- Segment acknowledgement number is the bytestream number of the next byte that is expected
+- TCP only acknowledges bytes up to the first missing byte in the stream
+  - e.g. if segments A, B, C are sent in order, and only A and C are received, two acknowledgements containing the sequence number of B are sent back
+- TCP RFC does not specify how to handle out-of-order segments, typically more efficient to buffer these
+- Initial sequence numbers are usually randomly chosen on both ends of the connection to avoid collision with older sessions using the same port numbers
+- TCP only maintains one timer for the oldest unacknowledged segment and will only retransmit this packet on timer expiry
+- Fast retransmit: if the sender receives 3 duplicate `ACK`s for the same segment, it will retransmit that segment before the timer expires
+
+__Flow control__ matches the rates at which sender transmits data and receiver consumes data from receive buffer to avoid buffer overflow
+- Receiver keeps track of last byte consumed $$B_c$$ and last byte received $$B_r$$, so amount of space occupied in receive buffer is $$B_r - B_c$$
+- Space left in buffer is $$\texttt{buf\_size} - (B_r - B_c)$$, included in window size field
+- Sender keeps track of last byte sent $$B_s$$ and last `ACK`ed byte $$B_a$$, so $$B_s - B_a$$ bytes may still be transmitting to receiver
+- Hence, sender must ensure $$B_s - B_a$$ never exceeds receive window size
+- Corner case: if the receive window has size 0, sender is required to send tiny segments so receiver can `ACK` with updated receive window size and unblock sender
 
 ## Network Addressing
 
