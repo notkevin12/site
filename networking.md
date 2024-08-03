@@ -1,5 +1,6 @@
 ---
 layout: default
+katex: true
 ---
 
 # Networking Glossary
@@ -125,8 +126,22 @@ __Reliable data transfer__ deals with packet corruption, loss, and reordering wh
   - However, now receiver cannot distinguish between a retransmitted packet and a packet containing new data
   - _Solution 2_: packets are numbered, and the sequence number is included in the header
 - How to handle lost/delayed packets? Sender can simply time out and retransmit after waiting too long for an `ACK`
-- Pipelining: sender sends many packets at a time without waiting for `ACK`s
-  - Go-Back-N (GBN): only N unacknowledged packets are allowed in the pipeline at any given time (sliding window)
+- Pipelining: to keep RDT performant, sender sends many packets at a time without waiting for `ACK`s
+- Reordering: old packets may arrive much later, leading to confusion between different packets with the same sequence number
+  - Solution: limiting packet lifetime allows sender to assume that old packets with a reused sequence number no longer exist in the network
+
+__Go-Back-N (GBN)__: only N unacknowledged packets are allowed in the pipeline at any given time (sliding window)
+
+- Receipt of an `ACK` for packet number $$n$$ signifies all packets up to and including $$n$$ have been correctly received
+- Once timeout for oldest unacknowledged packet expires, sender retransmits all currently unacknowledged packets (at most $$N$$ packets are retransmitted, hence the name)
+- Order of packet delivery matters: receiver only `ACK`s an uncorrupted packet $$n$$ when all packets up to $$n-1$$ have been correctly received
+- In all other cases (out-of-order, corruption), the receiver discards the packet and resends an `ACK` for the last correctly received packet
+
+__Selective-Repeat (SR)__ attempts to optimize GBN by retransmitting individual packets
+
+- On the sending side, $$N$$ timers are needed (as there may be at most $$N$$ unacknowledged packets at any time)
+- Receiver will acknowledge uncorrupted packets that arrive out-of-sequence, buffering up to $$N-1$$ such packets
+- Receiver still has to acknowledge uncorrupted packets in $$[\texttt{rcv\_base} - N, \texttt{rcv\_base} - 1]$$, since sender and receiver windows may differ by at most $$N$$
 
 __TCP__
 
