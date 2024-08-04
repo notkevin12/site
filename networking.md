@@ -3,7 +3,7 @@ layout: default
 katex: true
 ---
 
-# Networking Glossary
+# Networking
 
 - [Internet Protocol Stack](#internet-protocol-stack)
 - [Network Security](#network-security)
@@ -139,7 +139,7 @@ __Go-Back-N (GBN)__: only N unacknowledged packets are allowed in the pipeline a
 
 __Selective-Repeat (SR)__ attempts to optimize GBN by retransmitting individual packets
 
-- On the sending side, $$N$$ timers are needed (as there may be at most $$N$$ unacknowledged packets at any time)
+- On the sending side, $$N$$ timers are needed, as there may be at most $$N$$ unacknowledged packets at any time
 - Receiver will acknowledge uncorrupted packets that arrive out-of-sequence, buffering up to $$N-1$$ such packets
 - Receiver still has to acknowledge uncorrupted packets in $$[\texttt{rcv\_base} - N, \texttt{rcv\_base} - 1]$$, since sender and receiver windows may differ by at most $$N$$
 
