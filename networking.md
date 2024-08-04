@@ -128,7 +128,7 @@ __Reliable data transfer__ deals with packet corruption, loss, and reordering wh
 - How to handle lost/delayed packets? Sender can simply time out and retransmit after waiting too long for an `ACK`
 - Pipelining: to keep RDT performant, sender sends many packets at a time without waiting for `ACK`s
 - Reordering: old packets may arrive much later, leading to confusion between different packets with the same sequence number
-  - Solution: limiting packet lifetime allows sender to assume that old packets with a reused sequence number no longer exist in the network
+  - _Solution_: limiting packet lifetime allows sender to assume that old packets with a reused sequence number no longer exist in the network
 
 __Go-Back-N (GBN)__: only N unacknowledged packets are allowed in the pipeline at any given time (sliding window)
 
@@ -158,10 +158,44 @@ __TCP (Transmission Control Protocol)__ shares many ideas with GBN, but with a f
 
 __Flow control__ matches the rates at which sender transmits data and receiver consumes data from receive buffer to avoid buffer overflow
 - Receiver keeps track of last byte consumed $$B_c$$ and last byte received $$B_r$$, so amount of space occupied in receive buffer is $$B_r - B_c$$
-- Space left in buffer is $$\texttt{buf\_size} - (B_r - B_c)$$, included in window size field
+- Space left in buffer is $$\texttt{rwnd} \leftarrow \texttt{buf\_size} - (B_r - B_c)$$, included in window size field
 - Sender keeps track of last byte sent $$B_s$$ and last `ACK`ed byte $$B_a$$, so $$B_s - B_a$$ bytes may still be transmitting to receiver
-- Hence, sender must ensure $$B_s - B_a$$ never exceeds receive window size
-- Corner case: if the receive window has size 0, sender is required to send tiny segments so receiver can `ACK` with updated receive window size and unblock sender
+- Hence, sender must ensure $$B_s - B_a\leq \texttt{rwnd}$$
+- Corner case: if $$\texttt{rwnd} = 0$$, sender is required to send tiny segments so receiver can `ACK` with updated receive window size and unblock sender
+
+__TCP connection management__
+
+- Three-way handshake (3 segments total)
+  1. Initial request segment contains client's randomized initial sequence number `client_isn` and `SYN` flag set
+  2. Server allocates local connection state, then responds to SYN with its own `server_isn`, acknowledgement `client_isn + 1`, and `SYN` flag set
+  3. Client allocates local connection state, then responds to SYNACK with acknowledgement `server_isn + 1` and `SYN` flag cleared
+- Closing connections (4 segments total)
+  1. To start closing a connection, client sends a segment with the `FIN` flag set
+  2. Server sends a segment acknowledging client's request to close connection, then sends its own segment with `FIG` set
+  3. Client sends a segment acknowledging server's request to close connection, at which point all resources are deallocated
+- If a server receives a SYN segment for a port that is not open for connections, it sends back a segment with the `RST` flag set
+  - Needs to let the sender know not to resend the segment (as no SYNACK is coming)
+
+__TCP congestion-control algorithm__
+
+- To avoid congestion, sender limits transmission rate by ensuring $$B_s - B_a \leq \text{min}\{\texttt{rwnd}, \texttt{cwnd}\}$$
+  - i.e. difference between last byte sent and lack byte `ACK`ed never exceeds the minimum of receive window and congestion window sizes
+- Slow start:
+  - Start with `cwnd = 1 MSS`, then increase by `1 MSS` for every acknowledgement of a segment
+  - When `cwnd >= ssthresh` (congestion window exceeds slow start threshold), transition to congestion-avoidance state
+  - Upon timeout, set `ssthresh = cwnd / 2` and reset `cwnd = 1 MSS`
+  - Upon fast retransmit, transition to fast recovery state
+- Congestion avoidance:
+  - Upon receipt of acknowledgement, increase `cwnd` by `1 MSS / cwnd`
+  - Upon timeout, set `ssthresh = cwnd / 2` and reset `cwnd = 1 MSS` (same as slow start)
+  - Upon fast retransmit, set `ssthresh = cwnd / 2`, set `cwnd = cwnd / 2 + 3 MSS`, and transition to fast recovery state
+- Fast recovery:
+  - Upon receipt of duplicate acknowledgement for missing segment, increase `cwnd` by `1 MSS`
+  - Upon receipt of acknowledgement indicating missing segment has been received, set `cwnd = sstresh`, and transition to congestion avoidance
+  - Upon timeout, set `ssthresh = cwnd / 2`, reset `cwnd = 1 MSS`, and transition to slow start state
+- Other network-assisted approaches:
+  - Router could send a "choke" packet to a sender
+  - Reserve a packet field to indicate network congestion
 
 ## Network Addressing
 
@@ -172,3 +206,4 @@ An __IP address__ is 4 bytes long, looks like `127.0.0.1` (each period-separated
 ## References
 
 - [Computer Networking: A Top-Down Approach](https://www.amazon.com/Computer-Networking-Top-Down-Approach-7th/dp/0133594149)
+- [Javis in action: Fast Recovery Algorithm](https://www.isi.edu/websites/nsnam/DIRECTED_RESEARCH/DR_WANIDA/DR/JavisInActionFastRecoveryFrame.html)
