@@ -47,5 +47,6 @@ I am a Master's Computer Science student at [UC Santa Barbara](https://www.cs.uc
 ## Other
 
 - [C++ reference](./cpp)
+- [Networking reference](./networking)
 - [Snippets](./snippets)
 - [Source files for this site](https://github.com/notkevin12/site)
