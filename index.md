@@ -4,16 +4,18 @@ layout: default
 
 # Chenkuan (Kevin) Lai
 
-chenkuanlai [at] gmail.com / clai [at] ucsb.edu / [GitHub](https://github.com/notkevin12) / [LinkedIn](https://www.linkedin.com/in/notkevin12) / [Resume](Resume.pdf)
+chenkuanlai [at] gmail.com / [GitHub](https://github.com/notkevin12) / [LinkedIn](https://www.linkedin.com/in/notkevin12) / [Resume](Resume.pdf)
 
-I am a Master's Computer Science student at [UC Santa Barbara](https://www.cs.ucsb.edu/).
+I am a software engineer at SpaceX, where currently I work on the Starlink [Direct to Cell](https://starlink.com/business/direct-to-cell) program. I received my Bachelor's in Computer Science from [UC Santa Barbara](https://www.cs.ucsb.edu/) in 2023.
 
-![it's me! :P](me.png)
+![it's me! :3](me.jpg)
 
 ---
 
 ## Experience
 
+- _Software Engineer_
+  SpaceX (Sep 2024 - Present)
 - _Software Engineering Intern_  
   Arista Networks (Jun 2023 - Sep 2023)
 - _Quality Assurance Engineer Intern_  
